@@ -19,7 +19,7 @@ public class MyServiceTest {
 
     @Test
     public void valid_SSO_token_say_hello() {
-        MyService service = new MyService(registry());
+        MyService service = service();
 
         Response response = service.handleRequest(new Request("Luis", VALID_TOKEN));
 
@@ -28,11 +28,15 @@ public class MyServiceTest {
 
     @Test
     public void invalid_SSO_token_does_not_say_hello() {
-        MyService service = new MyService(registry());
+        MyService service = service();
 
         Response response = service.handleRequest(new Request("Luis", INVALID_TOKEN));
 
         assertEquals("Invalid token", response.getText());
+    }
+
+    private MyService service() {
+        return new MyService(registry());
     }
 
     private SingleSignOnRegistry registry() {
