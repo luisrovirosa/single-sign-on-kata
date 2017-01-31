@@ -25,4 +25,16 @@ public class MyServiceTest {
 
         assertEquals("Hello Luis!", response.getText());
     }
+
+    @Test
+    public void invalid_SSO_token_does_not_say_hello() {
+        SingleSignOnRegistry registry = mock(SingleSignOnRegistry.class);
+        SSOToken invalidToken = new SSOToken();
+        when(registry.isValid(invalidToken)).thenReturn(false);
+        MyService service = new MyService(registry);
+
+        Response response = service.handleRequest(new Request("Luis", invalidToken));
+
+        assertEquals("Invalid token", response.getText());
+    }
 }

@@ -13,6 +13,9 @@ public class MyService {
     }
 
     public Response handleRequest(Request request) {
+        if (!registry.isValid(request.getSSOToken())){
+            return new Response("Invalid token");
+        }
         return new Response("Hello " + request.getName() + "!");
     }
 }
