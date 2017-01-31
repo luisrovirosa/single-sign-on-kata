@@ -28,6 +28,17 @@ public class InMemorySingleSignOnRegistryShould {
         SSOToken ssoToken = registry.registerNewSession(AN_USERNAME, A_PASSWORD);
 
         boolean isValid = registry.isValid(ssoToken);
+
         assertThat(isValid, is(true));
+    }
+
+    @Test
+    public void be_invalid_a_token_not_provided_by_registry() {
+        InMemorySingleSignOnRegistry registry = new InMemorySingleSignOnRegistry();
+        SSOToken ssoToken = new SSOToken();
+
+        boolean isValid = registry.isValid(ssoToken);
+
+        assertThat(isValid, is(false));
     }
 }
