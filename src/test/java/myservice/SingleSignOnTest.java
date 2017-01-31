@@ -16,7 +16,6 @@ public class SingleSignOnTest {
     public static final String VALID_PASSWORD = "validPassword";
 
     @Test
-    @Ignore
     public void after_login_its_possible_use_my_service_with_sso_token(){
         AuthenticationGateway authenticationGateway = new DummyAuthenticationGateway();
         InMemorySingleSignOnRegistry registry = new InMemorySingleSignOnRegistry(authenticationGateway);
