@@ -41,4 +41,15 @@ public class InMemorySingleSignOnRegistryShould {
 
         assertThat(isValid, is(false));
     }
+
+    @Test
+    public void be_invalid_a_token_provided_by_registry_after_unregister() {
+        InMemorySingleSignOnRegistry registry = new InMemorySingleSignOnRegistry();
+        SSOToken ssoToken = registry.registerNewSession(AN_USERNAME, A_PASSWORD);
+        registry.unregister(ssoToken);
+
+        boolean isValid = registry.isValid(ssoToken);
+
+        assertThat(isValid, is(false));
+    }
 }

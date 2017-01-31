@@ -21,6 +21,6 @@ public class InMemorySingleSignOnRegistry implements SingleSignOnRegistry {
     }
 
     public void unregister(SSOToken token) {
-
+        validTokens.remove(token);
     }
 }
