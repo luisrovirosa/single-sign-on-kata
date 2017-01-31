@@ -9,7 +9,7 @@ public class InMemorySingleSignOnRegistry implements SingleSignOnRegistry {
     }
 
     public boolean isValid(SSOToken token) {
-        return false;
+        return true;
     }
 
     public void unregister(SSOToken token) {

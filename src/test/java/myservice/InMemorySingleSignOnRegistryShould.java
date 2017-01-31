@@ -3,6 +3,7 @@ package myservice;
 import org.junit.Test;
 import sso.SSOToken;
 
+import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -19,5 +20,14 @@ public class InMemorySingleSignOnRegistryShould {
         SSOToken ssoToken = registry.registerNewSession(AN_USERNAME, A_PASSWORD);
 
         assertThat(ssoToken, not(nullValue()));
+    }
+
+    @Test
+    public void be_valid_a_token_provided_by_registry() {
+        InMemorySingleSignOnRegistry registry = new InMemorySingleSignOnRegistry();
+        SSOToken ssoToken = registry.registerNewSession(AN_USERNAME, A_PASSWORD);
+
+        boolean isValid = registry.isValid(ssoToken);
+        assertThat(isValid, is(true));
     }
 }
