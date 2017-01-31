@@ -5,7 +5,7 @@ import sso.SingleSignOnRegistry;
 
 public class InMemorySingleSignOnRegistry implements SingleSignOnRegistry {
     public SSOToken registerNewSession(String userName, String password) {
-        return null;
+        return new SSOToken();
     }
 
     public boolean isValid(SSOToken token) {
