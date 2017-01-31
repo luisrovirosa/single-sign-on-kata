@@ -19,9 +19,7 @@ public class MyServiceTest {
 
     @Test
     public void valid_SSO_token_say_hello() {
-        SingleSignOnRegistry registry = mock(SingleSignOnRegistry.class);
-        when(registry.isValid(VALID_TOKEN)).thenReturn(true);
-        MyService service = new MyService(registry);
+        MyService service = new MyService(registry());
 
         Response response = service.handleRequest(new Request("Luis", VALID_TOKEN));
 
@@ -30,12 +28,17 @@ public class MyServiceTest {
 
     @Test
     public void invalid_SSO_token_does_not_say_hello() {
-        SingleSignOnRegistry registry = mock(SingleSignOnRegistry.class);
-        when(registry.isValid(INVALID_TOKEN)).thenReturn(false);
-        MyService service = new MyService(registry);
+        MyService service = new MyService(registry());
 
         Response response = service.handleRequest(new Request("Luis", INVALID_TOKEN));
 
         assertEquals("Invalid token", response.getText());
+    }
+
+    private SingleSignOnRegistry registry() {
+        SingleSignOnRegistry registry = mock(SingleSignOnRegistry.class);
+        when(registry.isValid(VALID_TOKEN)).thenReturn(true);
+        when(registry.isValid(INVALID_TOKEN)).thenReturn(false);
+        return registry;
     }
 }
