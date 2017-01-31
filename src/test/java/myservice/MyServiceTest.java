@@ -14,14 +14,16 @@ import sso.SingleSignOnRegistry;
 
 public class MyServiceTest {
 
+    private static final SSOToken VALID_TOKEN = new SSOToken();
+    private static final SSOToken INVALID_TOKEN = new SSOToken();
+
     @Test
     public void valid_SSO_token_say_hello() {
         SingleSignOnRegistry registry = mock(SingleSignOnRegistry.class);
-        SSOToken validToken = new SSOToken();
-        when(registry.isValid(validToken)).thenReturn(true);
+        when(registry.isValid(VALID_TOKEN)).thenReturn(true);
         MyService service = new MyService(registry);
 
-        Response response = service.handleRequest(new Request("Luis", validToken));
+        Response response = service.handleRequest(new Request("Luis", VALID_TOKEN));
 
         assertEquals("Hello Luis!", response.getText());
     }
@@ -29,11 +31,10 @@ public class MyServiceTest {
     @Test
     public void invalid_SSO_token_does_not_say_hello() {
         SingleSignOnRegistry registry = mock(SingleSignOnRegistry.class);
-        SSOToken invalidToken = new SSOToken();
-        when(registry.isValid(invalidToken)).thenReturn(false);
+        when(registry.isValid(INVALID_TOKEN)).thenReturn(false);
         MyService service = new MyService(registry);
 
-        Response response = service.handleRequest(new Request("Luis", invalidToken));
+        Response response = service.handleRequest(new Request("Luis", INVALID_TOKEN));
 
         assertEquals("Invalid token", response.getText());
     }
