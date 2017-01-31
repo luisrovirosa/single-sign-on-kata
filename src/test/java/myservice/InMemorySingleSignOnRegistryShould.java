@@ -12,14 +12,14 @@ import static org.mockito.Mockito.mock;
 
 public class InMemorySingleSignOnRegistryShould {
 
-    public static final String AN_USERNAME = "luisrovirosa";
-    public static final String A_PASSWORD = "aPassword";
+    public static final String VALID_USERNAME = "luisrovirosa";
+    public static final String VALID_PASSWORD = "aPassword";
 
     @Test
-    public void return_a_sso_token_when_register_new_session() {
+    public void return_a_sso_token_when_register_new_session_with_valid_credentials() {
         InMemorySingleSignOnRegistry registry = registry();
 
-        SSOToken ssoToken = registry.registerNewSession(AN_USERNAME, A_PASSWORD);
+        SSOToken ssoToken = registry.registerNewSession(VALID_USERNAME, VALID_PASSWORD);
 
         assertThat(ssoToken, not(nullValue()));
     }
@@ -27,7 +27,7 @@ public class InMemorySingleSignOnRegistryShould {
     @Test
     public void be_valid_a_token_provided_by_registry() {
         InMemorySingleSignOnRegistry registry = registry();
-        SSOToken ssoToken = registry.registerNewSession(AN_USERNAME, A_PASSWORD);
+        SSOToken ssoToken = registry.registerNewSession(VALID_USERNAME, VALID_PASSWORD);
 
         boolean isValid = registry.isValid(ssoToken);
 
@@ -47,7 +47,7 @@ public class InMemorySingleSignOnRegistryShould {
     @Test
     public void be_invalid_a_token_provided_by_registry_after_unregister() {
         InMemorySingleSignOnRegistry registry = registry();
-        SSOToken ssoToken = registry.registerNewSession(AN_USERNAME, A_PASSWORD);
+        SSOToken ssoToken = registry.registerNewSession(VALID_USERNAME, VALID_PASSWORD);
         registry.unregister(ssoToken);
 
         boolean isValid = registry.isValid(ssoToken);
