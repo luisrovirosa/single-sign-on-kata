@@ -1,5 +1,6 @@
 package myservice;
 
+import sso.AuthenticationGateway;
 import sso.SSOToken;
 import sso.SingleSignOnRegistry;
 
@@ -9,6 +10,11 @@ import java.util.List;
 public class InMemorySingleSignOnRegistry implements SingleSignOnRegistry {
 
     private final List<SSOToken> validTokens = new ArrayList<SSOToken>();
+    private final AuthenticationGateway authenticationGateway;
+
+    public InMemorySingleSignOnRegistry(AuthenticationGateway authenticationGateway) {
+        this.authenticationGateway = authenticationGateway;
+    }
 
     public SSOToken registerNewSession(String userName, String password) {
         SSOToken ssoToken = new SSOToken();
