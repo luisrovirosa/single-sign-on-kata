@@ -17,6 +17,9 @@ public class InMemorySingleSignOnRegistry implements SingleSignOnRegistry {
     }
 
     public SSOToken registerNewSession(String userName, String password) {
+        if (!authenticationGateway.credentialsAreValid(userName, password)){
+            return null;
+        }
         SSOToken ssoToken = new SSOToken();
         validTokens.add(ssoToken);
         return ssoToken;

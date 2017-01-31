@@ -9,6 +9,7 @@ import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class InMemorySingleSignOnRegistryShould {
 
@@ -22,6 +23,15 @@ public class InMemorySingleSignOnRegistryShould {
         SSOToken ssoToken = registry.registerNewSession(VALID_USERNAME, VALID_PASSWORD);
 
         assertThat(ssoToken, not(nullValue()));
+    }
+
+    @Test
+    public void return_a_null_token_when_register_new_session_with_invalid_credentials() {
+        InMemorySingleSignOnRegistry registry = registry();
+
+        SSOToken ssoToken = registry.registerNewSession("invalidUsername", "invalidPassword");
+
+        assertThat(ssoToken, is(nullValue()));
     }
 
     @Test
@@ -56,7 +66,8 @@ public class InMemorySingleSignOnRegistryShould {
     }
 
     private InMemorySingleSignOnRegistry registry() {
-        AuthenticationGateway mock = mock(AuthenticationGateway.class);
-        return new InMemorySingleSignOnRegistry(mock);
+        AuthenticationGateway gateway = mock(AuthenticationGateway.class);
+        when(gateway.credentialsAreValid(VALID_USERNAME, VALID_PASSWORD)).thenReturn(true);
+        return new InMemorySingleSignOnRegistry(gateway);
     }
 }
