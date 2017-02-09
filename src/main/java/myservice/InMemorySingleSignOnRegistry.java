@@ -17,11 +17,11 @@ public class InMemorySingleSignOnRegistry implements SingleSignOnRegistry {
     }
 
     public SSOToken registerNewSession(String userName, String password) {
-        if (!authenticationGateway.credentialsAreValid(userName, password)){
+        if (!areCredentialsValid(userName, password)){
             return null;
         }
         SSOToken ssoToken = new SSOToken();
-        validTokens.add(ssoToken);
+        store(ssoToken);
         return ssoToken;
     }
 
@@ -31,5 +31,13 @@ public class InMemorySingleSignOnRegistry implements SingleSignOnRegistry {
 
     public void unregister(SSOToken token) {
         validTokens.remove(token);
+    }
+
+    private boolean areCredentialsValid(String userName, String password) {
+        return authenticationGateway.credentialsAreValid(userName, password);
+    }
+
+    private void store(SSOToken ssoToken) {
+        validTokens.add(ssoToken);
     }
 }
