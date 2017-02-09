@@ -1,5 +1,6 @@
 package myservice;
 
+import org.junit.Before;
 import org.junit.Test;
 import sso.AuthenticationGateway;
 import sso.SSOToken;
@@ -16,6 +17,13 @@ public class SingleSignOnRegistryShould {
 
     public static final String VALID_USERNAME = "luisrovirosa";
     public static final String VALID_PASSWORD = "aPassword";
+    protected AuthenticationGateway gateway;
+
+    @Before
+    public void setUp() throws Exception {
+        gateway = mock(AuthenticationGateway.class);
+        when(gateway.credentialsAreValid(VALID_USERNAME, VALID_PASSWORD)).thenReturn(true);
+    }
 
     @Test
     public void return_a_sso_token_when_register_new_session_with_valid_credentials() {
@@ -67,8 +75,6 @@ public class SingleSignOnRegistryShould {
     }
 
     private SingleSignOnRegistry registry() {
-        AuthenticationGateway gateway = mock(AuthenticationGateway.class);
-        when(gateway.credentialsAreValid(VALID_USERNAME, VALID_PASSWORD)).thenReturn(true);
         return new InMemorySingleSignOnRegistry(gateway);
     }
 }
