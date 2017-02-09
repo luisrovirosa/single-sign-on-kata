@@ -13,7 +13,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class SingleSignOnRegistryShould {
+public abstract class SingleSignOnRegistryShould {
 
     public static final String VALID_USERNAME = "luisrovirosa";
     public static final String VALID_PASSWORD = "aPassword";
@@ -74,7 +74,5 @@ public class SingleSignOnRegistryShould {
         assertThat(isValid, is(false));
     }
 
-    private SingleSignOnRegistry registry() {
-        return new InMemorySingleSignOnRegistry(gateway);
-    }
+    protected abstract SingleSignOnRegistry registry();
 }
